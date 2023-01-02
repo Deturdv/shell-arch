@@ -1,0 +1,21 @@
+#!/bin/bash 
+useradd -m -G wheel  -s /bin/bash li
+sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/pikaur.git
+cd pikaur
+makepkg -fsri
+
+Package_manager=pacman
+for package in  konsole  dolphin  zsh sof-firmware alsa-firmware alsa-ucm-conf adobe-source-han-serif-cn-fonts wqy-zenhei noto-fonts-cjk noto-fonts-emoji noto-fonts-extra firefox chromium  ark p7zip unrar unarchiver lzop lrzip packagekit-qt5 packagekit appstream-qt appstream  gwenview git wget kate bind  networkmanager rp-pppoe fcitx5-chinese-addons fcitx5-anthy fcitx5-pinyin-moegirl fcitx5-pinyin-zhwiki  fcitx5-material-color
+do	
+	echo y |$Package_manager -S $package 
+
+done
+
+#DNS_Set_up
+sudo chattr -i  /etc/resolv.conf
+sed -i '3s/.*/nameserver 8.8.8.8/' /etc/resolv.conf | sed -i '4s/.*/nameserver 2001:4860:4860::8888/' /etc/resolv.conf 
+sed -i '$a nameserver 2001:4860:4860::8844' /etc/resolv.conf | sed -i '$i nameserver 8.8.4.4' /etc/resolv.conf 
+sudo chattr +i  /etc/resolv.conf
+
+
